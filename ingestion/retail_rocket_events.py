@@ -1,13 +1,30 @@
 import duckdb
+import os
 import pandas as pd
 import logging
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load .env variables
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-DB_PATH = r"C:\VS Code Files\major-projects\retail-analytics-platform\warehouse\retail_warehouse.db"
-EVENTS_PATH = Path(r"C:\VS Code Files\major-projects\retail-analytics-platform\data\raw\retail_rocket\events.csv")
+# Base project directory
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+db_path_env = os.getenv("DB_PATH")
+events_path_env = os.getenv("EVENTS_PATH")
+
+if db_path_env is None:
+    raise ValueError("DB_PATH not found in .env")
+
+if events_path_env is None:
+    raise ValueError("EVENTS_PATH not found in .env")
+
+DB_PATH = BASE_DIR / db_path_env
+EVENTS_PATH = BASE_DIR / events_path_env
 
 def run():
     if not EVENTS_PATH.exists():
@@ -18,7 +35,7 @@ def run():
 
     df = pd.read_csv(EVENTS_PATH)
 
-    # Keep only needed columns — reduces RAM footprint
+    # Keep only needed columns
     df = df[['visitorid', 'event', 'itemid', 'timestamp']].copy()
 
     # Convert Unix timestamp (milliseconds) to readable datetime

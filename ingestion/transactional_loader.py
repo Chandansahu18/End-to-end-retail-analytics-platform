@@ -1,13 +1,33 @@
 import duckdb
+import os
 import pandas as pd
 import logging
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-DB_PATH = r"C:\VS Code Files\major-projects\retail-analytics-platform\warehouse\retail_warehouse.db"
-OLIST_PATH = Path(r"C:\VS Code Files\major-projects\retail-analytics-platform\data\raw\olist")
+# Base project directory
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Read environment variables
+db_path_env = os.getenv("DB_PATH")
+olist_path_env = os.getenv("OLIST_PATH")
+
+# Validate env variables
+if db_path_env is None:
+    raise ValueError("DB_PATH not found in .env")
+
+if olist_path_env is None:
+    raise ValueError("OLIST_PATH not found in .env")
+
+# Create full paths
+DB_PATH = BASE_DIR / db_path_env
+OLIST_PATH = BASE_DIR / olist_path_env
 
 OLIST_FILES = {
     "olist_orders_dataset.csv":         "raw.orders",
