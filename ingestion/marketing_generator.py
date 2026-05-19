@@ -25,6 +25,10 @@ if db_path_env is None:
 # Create full path
 DB_PATH = BASE_DIR / db_path_env
 
+
+# Output CSV path — sits alongside the other raw source files
+RAW_CSV_PATH = BASE_DIR / "data" / "raw" / "marketing_data.csv"
+
 np.random.seed(42)  # Fixed seed — same data every run, reproducible
 
 def generate_marketing_data():
@@ -66,10 +70,19 @@ def generate_marketing_data():
     logger.info(f"Generated {len(df)} rows across {df['channel'].nunique()} channels")
     return df
 
-def run():
-    df = generate_marketing_data()
+def save_to_csv(df: pd.DataFrame):
+    RAW_CSV_PATH.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(RAW_CSV_PATH, index=False)
+    logger.info(f"Saved raw CSV → {RAW_CSV_PATH}")
 
+def load_to_duckdb():
+
+    if not RAW_CSV_PATH.exists():
+        raise FileNotFoundError(f"marketing_data.csv not found at {RAW_CSV_PATH}. Run generator first.")
+
+    df = pd.read_csv(RAW_CSV_PATH)
     conn = duckdb.connect(DB_PATH)
+    conn.register("marketing_df", df)
     conn.execute("DROP TABLE IF EXISTS raw.marketing")
     conn.execute("CREATE TABLE raw.marketing AS SELECT * FROM df")
 
@@ -81,6 +94,11 @@ def run():
     row_count = result[0]
     logger.info(f"raw.marketing loaded: {row_count} rows")
     conn.close()
+
+def run():
+    df = generate_marketing_data()
+    save_to_csv(df)
+    load_to_duckdb()
 
 if __name__ == "__main__":
     run()
