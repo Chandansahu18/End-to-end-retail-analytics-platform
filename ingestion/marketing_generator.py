@@ -31,7 +31,7 @@ def generate_marketing_data():
     channels = ['Google Search', 'Instagram', 'Facebook', 'Email', 'Organic']
     months = pd.date_range(start='2017-01-01', end='2018-08-01', freq='MS')
 
-    # ROAS benchmarks per channel — based on industry averages
+    # ROAS benchmarks per channel based on industry averages
     roas_base = {
         'Google Search': 3.5,
         'Instagram': 2.2,
