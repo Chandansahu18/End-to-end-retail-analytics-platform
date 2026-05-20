@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: fact_orders
+    description: "Order-level fact table — one row per order"
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+      - name: customer_unique_id
+        tests:
+          - not_null
+      - name: order_date
+        tests:
+          - not_null
+      - name: total_order_value
+        tests:
+          - not_null
+
+  - name: dim_customer
+    description: "One row per unique customer — uses customer_unique_id as key"
+    columns:
+      - name: customer_key
+        tests:
+          - not_null
+          - unique
+      - name: customer_segment
+        tests:
+          - accepted_values:
+              values: ['high_value', 'mid_value', 'low_value']
+
+  - name: dim_product
+    columns:
+      - name: product_key
+        tests:
+          - not_null
+          - unique
+
+  - name: fact_events
+    columns:
+      - name: event_date
+        tests:
+          - not_null
+          - unique

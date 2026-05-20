@@ -36,10 +36,12 @@ enriched as (
         o.order_estimated_delivery_date,
         o.delivery_delay_days,
         o.is_late_delivery,
-        i.item_count,
-        i.total_product_value,
-        i.total_freight_value,
-        i.total_order_value,
+        
+        coalesce(i.item_count, 0) as item_count,
+        coalesce(i.total_product_value, 0) as total_product_value,
+        coalesce(i.total_freight_value, 0) as total_freight_value,
+        coalesce(i.total_order_value, 0) as total_order_value,
+
         p.total_payment_value,
         p.primary_payment_type,
         p.max_installments,

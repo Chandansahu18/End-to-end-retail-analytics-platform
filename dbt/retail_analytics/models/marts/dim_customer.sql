@@ -9,10 +9,11 @@ geo as (
 ),
 
 customers_raw as (
-    select distinct
+    select
         customer_unique_id,
-        customer_zip_code_prefix
+        any_value(customer_zip_code_prefix) as customer_zip_code_prefix
     from {{ ref('stg_customers') }}
+    group by customer_unique_id
 ),
 
 final as (

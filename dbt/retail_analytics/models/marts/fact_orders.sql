@@ -5,10 +5,10 @@ with enriched as (
 reviews as (
     select
         order_id,
-        review_score,
-        review_comment_message
-
+        avg(review_score) as review_score,
+        any_value(review_comment_message) as review_comment_message
     from {{ ref('stg_order_reviews') }}
+    group by order_id
 ),
 
 sellers as (
