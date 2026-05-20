@@ -9,26 +9,32 @@ models:
         tests:
           - not_null
           - unique
+
       - name: customer_id
         tests:
           - not_null
+
       - name: order_status
         tests:
           - not_null
           - accepted_values:
-              values: ['delivered', 'shipped', 'invoiced', 'processing', 'created', 'approved']
+              arguments:
+                values: ['delivered', 'shipped', 'invoiced', 'processing', 'created', 'approved']
 
   - name: stg_order_items
     columns:
       - name: order_id
         tests:
           - not_null
+
       - name: product_id
         tests:
           - not_null
+
       - name: seller_id
         tests:
           - not_null
+
       - name: price
         tests:
           - not_null
@@ -39,9 +45,11 @@ models:
         tests:
           - not_null
           - unique
+
       - name: customer_unique_id
         tests:
           - not_null
+
       - name: customer_state
         tests:
           - not_null
@@ -51,11 +59,14 @@ models:
       - name: visitor_id
         tests:
           - not_null
+
       - name: event_type
         tests:
           - not_null
           - accepted_values:
-              values: ['view', 'addtocart', 'transaction']
+              arguments:
+                values: ['view', 'addtocart', 'transaction']
+
       - name: item_id
         tests:
           - not_null
@@ -65,14 +76,18 @@ models:
       - name: campaign_month
         tests:
           - not_null
+
       - name: channel
         tests:
           - not_null
           - accepted_values:
-              values: ['Google Search', 'Instagram', 'Facebook', 'Email', 'Organic']
+              arguments:
+                values: ['Google Search', 'Instagram', 'Facebook', 'Email', 'Organic']
+
       - name: spend
         tests:
           - not_null
+
       - name: roas
         tests:
           - not_null
