@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    description: "Raw source tables ingested from Olist, RetailRocket, and synthetic generator"
+    tables:
+      - name: orders
+        description: "One row per order - central transactional table"
+      - name: order_items
+        description: "One row per line item within an order"
+      - name: customers
+        description: "Customer location data - customer_id is per-order, use customer_unique_id for true identity"
+      - name: sellers
+        description: "Seller registration data"
+      - name: products
+        description: "Product catalogue with Portuguese category names"
+      - name: order_payments
+        description: "Payment records - multiple rows per order for split payments"
+      - name: order_reviews
+        description: "Customer review scores and optional text comments"
+      - name: geolocation
+        description: "Lat/long coordinates by zip prefix — not unique, must aggregate"
+      - name: product_category_translation
+        description: "Portuguese to English category name mapping"
+      - name: events
+        description: "RetailRocket clickstream events - view, addtocart, transaction"
+      - name: marketing
+        description: "Synthetic marketing campaign data by channel and month"
