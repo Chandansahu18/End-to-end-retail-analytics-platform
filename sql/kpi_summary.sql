@@ -16,7 +16,8 @@ base_orders AS (
         is_late_delivery,
         review_score
     FROM marts.fact_orders
-    WHERE total_order_value > 0
+    WHERE order_status = 'delivered'
+    AND total_order_value > 0
 ),
 
 -- Overall KPI summary
