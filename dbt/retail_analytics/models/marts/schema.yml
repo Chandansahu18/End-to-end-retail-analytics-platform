@@ -28,7 +28,8 @@ models:
       - name: customer_segment
         tests:
           - accepted_values:
-              values: ['high_value', 'mid_value', 'low_value']
+              arguments:
+                values: ['high_value', 'mid_value', 'low_value']
 
   - name: dim_product
     columns:
@@ -43,3 +44,26 @@ models:
         tests:
           - not_null
           - unique
+
+  - name: fact_rfm
+    description: "Customer-level RFM segmentation table"
+    columns:
+      - name: customer_unique_id
+        tests:
+          - not_null
+          - unique
+      - name: recency_days
+        tests:
+          - not_null
+      - name: frequency
+        tests:
+          - not_null
+      - name: monetary
+        tests:
+          - not_null
+      - name: segment
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Champions', 'Loyal', 'Potential', 'At Risk', 'Lost']
