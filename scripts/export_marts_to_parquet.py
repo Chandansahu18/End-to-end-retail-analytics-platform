@@ -27,7 +27,8 @@ tables = [
     "marts.fact_rfm",
     "marts.dim_customer",
     "marts.dim_product",
-    "marts.dim_date"
+    "marts.dim_date",
+    "marts.fact_order_item"
 ]
 
 conn = duckdb.connect(str(DB_PATH), read_only=True)
