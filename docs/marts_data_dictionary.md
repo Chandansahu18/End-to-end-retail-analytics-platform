@@ -12,7 +12,7 @@ These marts are designed for:
 - RFM segmentation
 - Power BI dashboards and reporting
 
-All mart models are materialized under the `marts` schema in DuckDB.
+All mart models are materialized as **tables** under the `marts` schema in DuckDB.
 
 Unlike the staging layer, marts contain business-ready entities and aggregated reporting logic intended for direct analytical consumption.
 
