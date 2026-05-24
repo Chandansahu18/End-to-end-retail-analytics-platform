@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: fact_orders
-    description: "Order-level fact table — one row per order"
+    description: Order-level fact table - one row per order
     columns:
       - name: order_id
         tests:
@@ -19,7 +19,7 @@ models:
           - not_null
 
   - name: dim_customer
-    description: "One row per unique customer — uses customer_unique_id as key"
+    description: One row per unique customer - uses customer_unique_id as key
     columns:
       - name: customer_key
         tests:
@@ -29,7 +29,7 @@ models:
         tests:
           - accepted_values:
               arguments:
-                values: ['high_value', 'mid_value', 'low_value']
+                values: ["high_value", "mid_value", "low_value"]
 
   - name: dim_product
     columns:
@@ -46,7 +46,7 @@ models:
           - unique
 
   - name: fact_rfm
-    description: "Customer-level RFM segmentation table"
+    description: Customer-level RFM segmentation table
     columns:
       - name: customer_unique_id
         tests:
@@ -66,4 +66,53 @@ models:
           - not_null
           - accepted_values:
               arguments:
-                values: ['Champions', 'Loyal', 'Potential', 'At Risk', 'Lost']
+                values: ["Champions", "Loyal", "Potential", "At Risk", "Lost"]
+
+  - name: fact_order_item
+    description: Item-level fact table. One row per product item within an order
+    columns:
+      - name: order_item_key
+        description: Surrogate primary key to uniquely identifies every item row in this table
+        tests:
+          - not_null
+          - unique
+          
+      - name: order_id
+        tests:
+          - not_null
+
+      - name: order_item_id
+        tests:
+          - not_null
+
+      - name: product_id
+        tests:
+          - not_null
+
+      - name: seller_id
+        tests:
+          - not_null
+
+      - name: price
+        tests:
+          - not_null
+
+      - name: freight_value
+        tests:
+          - not_null
+
+      - name: item_total_value
+        tests:
+          - not_null
+
+      - name: category_english
+        description: English product category name from dim_product
+
+      - name: category_portuguese
+        description: Portuguese product category name from dim_product
+
+      - name: product_weight_g
+        description: Product weight in grams. Used for freight analysis
+
+      - name: product_photos_qty
+        description: Number of product photos. Proxy for listing quality
