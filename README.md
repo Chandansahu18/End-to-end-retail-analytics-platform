@@ -7,7 +7,6 @@ End-to-end retail analytics platform built using Python, DuckDB, dbt Core, SQL, 
 ![DuckDB](https://img.shields.io/badge/DuckDB-1.5-yellow)
 ![Power BI](https://img.shields.io/badge/Power_BI-Dashboard-gold)
 ![pytest](https://img.shields.io/badge/Tests-pytest-red)
-![GitHub Actions](https://img.shields.io/badge/CI-GitHub_Actions-green)
 
 ## Dashboard Preview
 
@@ -61,7 +60,6 @@ The project demonstrates:
 * Advanced SQL analytics - cohort retention, RFM segmentation, funnel analysis, A/B testing, marketing efficiency
 * Six-page Power BI dashboard with star schema data model and DAX measures
 * pytest data quality validation across raw and mart layers
-* GitHub Actions CI pipeline for automated testing
 
 ---
 
@@ -96,6 +94,17 @@ This project solves that by building a centralised analytics platform that answe
 
 ![Retail Analytics Platform Architecture](dashboard/screenshots/retail_analytics_architecture.png)
 
+## End-to-End Pipeline Flow
+
+Raw CSV Sources
+→ Python Ingestion
+→ DuckDB Raw Layer
+→ dbt Staging Models
+→ dbt Intermediate Models
+→ dbt Mart Models
+→ Parquet Mart Exports
+→ Power BI Dashboard & SQL Analytics
+
 ---
 
 ## Tech Stack
@@ -110,7 +119,6 @@ This project solves that by building a centralised analytics platform that answe
 | SQL Analytics | DuckDB SQL | Advanced queries - CTEs, window functions |
 | Data Manipulation | pandas | DataFrame operations in ingestion |
 | Testing | pytest | Data quality assertions on raw and mart tables |
-| CI/CD | GitHub Actions | Automated test pipeline on push to main |
 | Documentation | Markdown | Data dictionaries, KPI definitions, architecture |
 | Version Control | Git + GitHub | Full commit history from project start |
 | SQL Editor | DBeaver Community | Visual SQL editor connected to DuckDB |
@@ -279,15 +287,6 @@ Run tests:
 ```bash
 pytest tests/test_data_quality.py -v
 ```
-
-### GitHub Actions CI
-
-`.github/workflows/ci.yml` runs on every push to main:
-- Installs dependencies from `requirements.txt`
-- Runs ingestion pipeline
-- Runs `dbt build` - models and tests
-- Runs `pytest` - data quality assertions
-
 ---
 
 ## Power BI Dashboard
@@ -361,11 +360,7 @@ No charts - pure business intelligence layer.
 ## Project Structure
 
 ```
-retail-analytics-platform/
-│
-├── .github/
-│   └── workflows/
-│       └── ci.yml                    
+retail-analytics-platform/                   
 │
 ├── dashboard/
 │   ├── retail_analytics_platform.pbix 
@@ -609,7 +604,7 @@ Exported files:
 | Phase 3 | SQL Analytics - 7 advanced queries | ✅ Complete |
 | Phase 4 | Python EDA - pandas, seaborn, notebooks | ✅ Complete |
 | Phase 5 | Power BI Dashboard - 6-page dashboard | ✅ Complete |
-| Phase 6 | Reporting and Production Hardening - pytest, CI, docs | ✅ Complete |
+| Phase 6 | Reporting and Production Hardening - pytest, docs | ✅ Complete |
 
 ---
 
