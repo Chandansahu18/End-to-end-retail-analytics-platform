@@ -429,6 +429,7 @@ retail-analytics-platform/
 ├── .env                              
 ├── .gitignore
 ├── requirements.txt
+├── setup.py                          
 └── README.md
 ```
 
@@ -523,19 +524,15 @@ retail_analytics:
       threads: 4
 ```
 
-> **Note:** dbt reads `env_var()` from your shell environment, not from `.env`. Export `DB_PATH` before running dbt commands.
+> **Note:** dbt reads `env_var()` from your shell environment, not from `.env`. Run the one-time setup script below so `DB_PATH` from `.env` is registered permanently on your machine.
 
-**Windows (PowerShell):**
-
-```powershell
-$env:DB_PATH = "/path/to/your/project/warehouse/retail_warehouse.db"
-```
-
-**Mac/Linux:**
+**One-time setup (run from project root after Step 4):**
 
 ```bash
-export DB_PATH="/path/to/your/project/warehouse/retail_warehouse.db"
+python setup.py
 ```
+
+Close and reopen your terminal before running dbt.
 
 ### 8 - Run dbt Transformation Pipeline
 
