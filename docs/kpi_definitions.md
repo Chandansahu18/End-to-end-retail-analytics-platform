@@ -28,9 +28,9 @@
 
 | KPI | Definition | Formula | Source table |
 |---|---|---|---|
-| **Recency Score (R)** | NTILE(5) bucket on days since last order — higher score = more recent | `NTILE(5) ORDER BY recency_days DESC` | `marts.fact_rfm` |
-| **Frequency Score (F)** | NTILE(5) bucket on distinct order count — higher score = more orders | `NTILE(5) ORDER BY frequency ASC` | `marts.fact_rfm` |
-| **Monetary Score (M)** | NTILE(5) bucket on total spend — higher score = higher spend | `NTILE(5) ORDER BY monetary ASC` | `marts.fact_rfm` |
+| **Recency Score (R)** | NTILE(5) bucket on days since last order - higher score = more recent | `NTILE(5) ORDER BY recency_days DESC` | `marts.fact_rfm` |
+| **Frequency Score (F)** | NTILE(5) bucket on distinct order count - higher score = more orders | `NTILE(5) ORDER BY frequency ASC` | `marts.fact_rfm` |
+| **Monetary Score (M)** | NTILE(5) bucket on total spend - higher score = higher spend | `NTILE(5) ORDER BY monetary ASC` | `marts.fact_rfm` |
 | **RFM Score** | Composite three-digit score combining R, F, M | Concatenation of R + F + M scores (e.g. "555" = Champion) | `marts.fact_rfm` |
 | **Champions** | Customers with R ≥ 4 and F ≥ 4 | CASE logic on R and F scores | `marts.fact_rfm` |
 | **At Risk** | Customers with R ≤ 2 and F ≥ 3 and M ≥ 3 | CASE logic on R, F, M scores | `marts.fact_rfm` |

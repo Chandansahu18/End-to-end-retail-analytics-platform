@@ -111,7 +111,7 @@ Raw CSV Sources
 | Layer | Tool | Purpose |
 |---|---|---|
 | Language | Python 3.11 | Ingestion scripts, data generation |
-| Warehouse | DuckDB 1.5 | Local OLAP warehouse — single file, no server |
+| Warehouse | DuckDB 1.5 | Local OLAP warehouse - single file, no server |
 | Transformation | dbt Core 1.11 | SQL transformations, lineage, schema tests |
 | dbt Adapter | dbt-duckdb | DuckDB connection for dbt |
 | BI & Reporting | Power BI Desktop | Six-page executive dashboard |
@@ -198,7 +198,7 @@ The warehouse follows a three-layer ELT architecture inside a single DuckDB file
 
 ## dbt Modeling Layers
 
-### Staging Models — `models/staging/`
+### Staging Models - `models/staging/`
 
 One model per source table. Clean, cast, rename, filter. No joins. No business logic.
 
@@ -215,17 +215,17 @@ One model per source table. Clean, cast, rename, filter. No joins. No business l
 | `stg_events` | `raw.events` | Unix ms → TIMESTAMP · columns renamed to snake_case |
 | `stg_marketing` | `raw.marketing` | `campaign_month` cast to DATE |
 
-### Intermediate Models — `models/intermediate/`
+### Intermediate Models - `models/intermediate/`
 
 Business logic, joins, and aggregations across staging models.
 
 | Model | Description |
 |---|---|
 | `int_orders_enriched` | Orders joined with customers, payments (aggregated), and items |
-| `int_customer_orders` | Customer-level aggregation using `customer_unique_id` — LTV, frequency, repeat flag |
-| `int_funnel_events` | Visitor-level daily funnel — views, carts, transactions, max stage reached |
+| `int_customer_orders` | Customer-level aggregation using `customer_unique_id` - LTV, frequency, repeat flag |
+| `int_funnel_events` | Visitor-level daily funnel - views, carts, transactions, max stage reached |
 
-### Mart Models — `models/marts/`
+### Mart Models - `models/marts/`
 
 Analytics-ready star schema tables. Dashboard and SQL analysis reads only from here.
 
@@ -234,8 +234,8 @@ dim_date ───────────────────────�
 dim_customer ──────────────────────────► fact_orders
 dim_product ───────────────────────────► fact_orders (via fact_order_item bridge)
 
-fact_events    — standalone (RetailRocket)
-fact_marketing — standalone (Synthetic)
+fact_events    - standalone (RetailRocket)
+fact_marketing - standalone (Synthetic)
 ```
 
 ### dbt Lineage DAG
@@ -473,10 +473,13 @@ pip install -r requirements.txt
 Create `.env` in the project root:
 
 ```env
-DB_PATH=warehouse\retail_warehouse.db
+# .env  (project root)
+DB_PATH=/path/to/your/project/warehouse/retail_warehouse.db
 EVENTS_PATH=data/raw/retailrocket/events.csv
-OLIST_PATH=data\raw\olist
+OLIST_PATH=data/raw/olist
 ```
+
+> ⚠️ **DB_PATH must be an absolute path** to your warehouse file. Replace `/path/to/your/project` with the directory where you cloned this repo.
 
 ### 5 - Download Source Data
 
@@ -516,8 +519,22 @@ retail_analytics:
   outputs:
     dev:
       type: duckdb
-      path: C:/retail-analytics-platform/warehouse/retail_warehouse.db
+      path: "{{ env_var('DB_PATH') }}"
       threads: 4
+```
+
+> **Note:** dbt reads `env_var()` from your shell environment, not from `.env`. Export `DB_PATH` before running dbt commands.
+
+**Windows (PowerShell):**
+
+```powershell
+$env:DB_PATH = "/path/to/your/project/warehouse/retail_warehouse.db"
+```
+
+**Mac/Linux:**
+
+```bash
+export DB_PATH="/path/to/your/project/warehouse/retail_warehouse.db"
 ```
 
 ### 8 - Run dbt Transformation Pipeline
@@ -539,7 +556,8 @@ dbt docs serve
 ### 9 - Run Data Quality Tests
 
 ```bash
-cd C:/retail-analytics-platform
+# Step 9 - Run Data Quality Tests
+cd /path/to/your/project     # ← replace with your actual path
 pytest tests/test_data_quality.py -v
 ```
 

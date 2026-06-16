@@ -280,7 +280,7 @@ raw.marketing - Synthetic
 | `raw.products` | `product_category_name` | 610 nulls - uncategorised products | Label as `uncategorized` |
 | `raw.products` | `product_name_lenght` | Typo in source column name | Rename to `product_name_length` |
 | `raw.products` | `product_description_lenght` | Same typo | Rename to `product_description_length` |
-| `raw.geolocation` | `geolocation_zip_code_prefix` | ~52 coordinate entries per zip — not unique | Aggregate with `AVG(lat/lng) GROUP BY zip` |
+| `raw.geolocation` | `geolocation_zip_code_prefix` | ~52 coordinate entries per zip - not unique | Aggregate with `AVG(lat/lng) GROUP BY zip` |
 | `raw.order_reviews` | `review_comment_title` | 88% null | Treat as optional; not a primary analysis column |
 | `raw.order_reviews` | `review_comment_message` | 59% null | Usable for sentiment analysis on populated rows only |
 | `raw.events` | `transactionid` | 2,733,644 nulls - expected, not a defect | Nulls on view/addtocart rows are correct by design |

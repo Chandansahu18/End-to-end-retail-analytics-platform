@@ -62,7 +62,7 @@ Canceled and unavailable orders are excluded here permanently. No downstream mod
 | `customer_id` | VARCHAR | 0 | UNCHANGED | FK → `stg_customers.customer_id` |
 | `order_status` | VARCHAR | 0 | FILTERED | Only active statuses remain: `delivered`, `shipped`, `invoiced`, `processing`, `created`, `approved` |
 | `order_purchase_timestamp` | TIMESTAMP | 0 | CAST | VARCHAR → TIMESTAMP |
-| `order_approved_at` | TIMESTAMP | ~160 | CAST | VARCHAR → TIMESTAMP. Nulls expected — unprocessed orders |
+| `order_approved_at` | TIMESTAMP | ~160 | CAST | VARCHAR → TIMESTAMP. Nulls expected - unprocessed orders |
 | `order_delivered_carrier_date` | TIMESTAMP | ~1,783 | CAST | VARCHAR → TIMESTAMP. Nulls = not yet shipped |
 | `order_delivered_customer_date` | TIMESTAMP | ~2,965 | CAST | VARCHAR → TIMESTAMP. Nulls = not yet delivered |
 | `order_estimated_delivery_date` | TIMESTAMP | 0 | CAST | VARCHAR → TIMESTAMP |
@@ -160,7 +160,7 @@ Canceled and unavailable orders are excluded here permanently. No downstream mod
 | Column | Type | Nulls | Tag | Description |
 |---|---|---|---|---|
 | `product_id` | VARCHAR | 0 | UNCHANGED | Primary key |
-| `product_category_name_pt` | VARCHAR | ~610 | NORMALISED | Portuguese category name. `coalesce(..., 'uncategorized')` applied — nulls replaced with `'uncategorized'` |
+| `product_category_name_pt` | VARCHAR | ~610 | NORMALISED | Portuguese category name. `coalesce(..., 'uncategorized')` applied - nulls replaced with `'uncategorized'` |
 | `product_category_name_en` | VARCHAR | ~610 | DERIVED | English translation from `raw.product_category_translation` via left join. Nulls (uncategorised products) filled with `'uncategorized'` |
 | `product_name_length` | INT | ~610 | FIXED | Renamed from `product_name_lenght` - source typo corrected |
 | `product_description_length` | INT | ~610 | FIXED | Renamed from `product_description_lenght` - source typo corrected |
@@ -262,7 +262,7 @@ WHERE payment_type != 'not_defined'
 | `visitor_id` | INT | 0 | RENAMED | `visitorid` → `visitor_id`. Snake_case convention. |
 | `event_type` | VARCHAR | 0 | RENAMED | `event` → `event_type`. More descriptive. Values: `view`, `addtocart`, `transaction` |
 | `item_id` | INT | 0 | RENAMED | `itemid` → `item_id`. Snake_case convention. |
-| `event_datetime` | TIMESTAMP | 0 | CAST + RENAMED | `epoch_ms(timestamp)` — Unix milliseconds → TIMESTAMP. Column renamed from `timestamp`. |
+| `event_datetime` | TIMESTAMP | 0 | CAST + RENAMED | `epoch_ms(timestamp)` - Unix milliseconds → TIMESTAMP. Column renamed from `timestamp`. |
 | `event_date` | DATE | 0 | DERIVED | `cast(event_datetime as date)` - date portion only, for daily aggregations |
 | `transaction_id` | FLOAT | ~2,733,644 | RENAMED | `transactionid` → `transaction_id`. Nulls on non-transaction rows are correct and expected. |
 
@@ -362,5 +362,5 @@ stg_marketing   (no join to Olist models)
 ---
 
 *Staging layer built with dbt Core + DuckDB adapter*
-*All models verified via `dbt build` — zero test failures*
+*All models verified via `dbt build` - zero test failures*
 *Lineage graph available via `dbt docs serve`*
