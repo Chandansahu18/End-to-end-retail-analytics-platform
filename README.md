@@ -23,6 +23,7 @@ End-to-end retail analytics platform built using Python, DuckDB, dbt Core, SQL, 
 ## Table of Contents
 
 * [Project Overview](#project-overview)
+* [Data Sources & Isolation](#data-sources--isolation)
 * [Business Problem](#business-problem)
 * [Project Objectives](#project-objectives)
 * [Architecture Diagram](#architecture-diagram)
@@ -59,6 +60,12 @@ The project demonstrates:
 * Advanced SQL analytics - cohort retention, RFM segmentation, funnel analysis, A/B testing, marketing efficiency
 * Six-page Power BI dashboard with star schema data model and DAX measures
 * pytest data quality validation across raw and mart layers
+
+---
+
+## Data Sources & Isolation
+
+This project intentionally uses three analytically isolated data sources - Olist (Brazilian e-commerce, 2016-2018), RetailRocket (Russian clickstream, 2015), and a synthetic marketing dataset. `fact_events` and `fact_marketing` are standalone mart models with no joins to Olist's transactional tables. This reflects how an analytics engineer models heterogeneous source data without forcing false relationships.
 
 ---
 
@@ -326,7 +333,8 @@ ROAS by channel (Organic 4.95x highest · Instagram 2.12x lowest) · CPA compari
 #### Page 5 - Funnel and Conversion
 KPI cards: 2.66M views · 22.46K transactions · 69.33K add-to-carts · 0.84% conversion rate · 97.40% drop-off rate.
 Funnel visual (View → Add to Cart → Transaction) · Daily conversion rate with 7-day rolling average.
-*Note: RetailRocket data - separate platform from Olist.*
+
+* **Data Isolation Caveat:** The behavioral funnel uses the Russian clickstream dataset from RetailRocket (2015) as a pattern demonstration. Since it represents a separate platform from Olist (Brazil, 2016–2018), there are no joins to order tables. In a production environment, this clickstream domain would be replaced with the actual store's tracking data and joined to transaction/order IDs for end-to-end multi-touch attribution.
 
 #### Page 6 - Executive Insights
 Headline finding · 5 key findings with quantified metrics · Business recommendations by priority · Data limitations.
