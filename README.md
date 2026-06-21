@@ -8,6 +8,7 @@ End-to-end retail analytics platform built using Python, DuckDB, dbt Core, SQL, 
 ![Power BI](https://img.shields.io/badge/Power_BI-Dashboard-gold)
 ![pytest](https://img.shields.io/badge/Tests-pytest-red)
 
+
 ## Dashboard Preview
 
 | Executive Overview | Customer Health |
@@ -20,8 +21,14 @@ End-to-end retail analytics platform built using Python, DuckDB, dbt Core, SQL, 
 
 ---
 
+## Video Walkthrough
+[![Retail Analytics Platform Video Walkthrough](https://img.youtube.com/vi/VVmx7-t-ZVY/hqdefault.jpg)](https://youtu.be/VVmx7-t-ZVY?si=UYhp2EltVGvM4Y5k)
+
+---
+
 ## Table of Contents
 
+* [Video Walkthrough](#video-walkthrough)
 * [Project Overview](#project-overview)
 * [Data Sources & Isolation](#data-sources--isolation)
 * [Business Problem](#business-problem)
